@@ -36,3 +36,6 @@ class Dolar(models.Model):
         max_length=10,
         help_text=_("Type of quote")
     )
+    extra_data = models.JSONField(
+        help_text=_("Extra data for the dolar")
+    )
