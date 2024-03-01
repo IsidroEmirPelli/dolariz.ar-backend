@@ -1,4 +1,4 @@
-from .celery import app as celery_app
+from dolariz_ar.tasksapp.celery import app as celery_app
 
 
 __all__ = ("celery_app",)
