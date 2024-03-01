@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     # adding our app's
     "api",
     'core',
-    'api',
 ]
 
 MIDDLEWARE = [
@@ -137,20 +136,16 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": "debug.log",
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
     },
 }
+
 # Celery settings
 CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
