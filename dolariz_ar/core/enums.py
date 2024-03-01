@@ -9,7 +9,6 @@ class DolarType(enum.Enum):
     CCL = 4
     LEDES = 5
 
-
     __labels__ = {
         OFICIAL: _("Oficial"),
         BLUE: _("Blue"),
