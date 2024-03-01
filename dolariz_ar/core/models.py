@@ -33,7 +33,6 @@ class Dolar(models.Model):
     )
     type_of_quote = enum.EnumField(
         DolarType,
-        max_length=10,
         help_text=_("Type of quote")
     )
     extra_data = models.JSONField(
