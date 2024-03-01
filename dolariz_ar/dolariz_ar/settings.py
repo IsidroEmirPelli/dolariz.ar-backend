@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # adding our app's
     "api",
+    'core',
+    'api',
 ]
 
 MIDDLEWARE = [
