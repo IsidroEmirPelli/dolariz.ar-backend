@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # adding our app's
+    'core',
     'api',
 ]
 
