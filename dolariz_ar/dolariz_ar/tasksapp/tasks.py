@@ -29,12 +29,12 @@ def get_blue() -> tuple[float, float]:
         .find("a", string="Dólar blue")
         .parent
     )
-    buying_price = (
+    buying_price = float(
         soup.find("div", class_="compra")
         .find("div", class_="val")
         .string.removeprefix("$")
     )
-    selling_price = (
+    selling_price = float(
         soup.find("div", class_="venta")
         .find("div", class_="val")
         .string.removeprefix("$")
