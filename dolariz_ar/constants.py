@@ -1,5 +1,5 @@
 from os import getenv
 
-
+DEFAULT_PRICE_VALUE = 0.0
 BLUE_DOLLAR_URL = getenv("BLUE_DOLLAR_URL")
 OFFICIAL_DOLLAR_URL = getenv("OFFICIAL_DOLLAR_URL")
