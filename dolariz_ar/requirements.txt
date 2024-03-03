@@ -4,6 +4,7 @@ celery
 django
 django-celery-beat
 django-enumfield
+django-filter
 django-jazzmin
 djangorestframework
 drf-spectacular[sidecar]
