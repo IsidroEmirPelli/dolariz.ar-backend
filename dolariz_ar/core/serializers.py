@@ -4,6 +4,17 @@ from .models import Dollar
 
 
 class DollarSerializer(ModelSerializer):
+    """
+    Serializer for the Dollar model.
+    
+    Attributes:
+    - price_buy (DecimalField): Price to buy the dollar.
+    - price_sell (DecimalField): Price to sell the dollar.
+    - date (DateTimeField): Date and time of the prices of the dollar.
+    - type_of_quote (EnumField): Type of dollar quote.
+    - extra_data (JSONField): Extra data for the dollar.
+    """
+
     class Meta:
         model = Dollar
         fields = [
