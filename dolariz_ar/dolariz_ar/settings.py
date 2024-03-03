@@ -33,14 +33,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Custom libraries
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
+    "django_filters",
     "django_celery_beat",
+    # Django default apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # adding our app's
+    # Our apps
     "api",
     "core",
 ]
@@ -152,3 +157,19 @@ CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# Spectacular settings for swagger
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "api",
+    "DESCRIPTION": "dolariz.ar",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+    # Split components into request and response parts where appropriate
+    "COMPONENT_SPLIT_REQUEST": True,
+    # Adds 'blank' and 'null' enum choices where appropriate. disable on client generation issues
+    "ENUM_ADD_EXPLICIT_BLANK_NULL_CHOICE": False,
+}
