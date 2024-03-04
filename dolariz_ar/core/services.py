@@ -1,4 +1,5 @@
 from .models import Dollar, DollarType
+from django.core.cache import cache
 
 
 def calc_variation(old_price: float, new_price: float) -> float:
@@ -27,5 +28,5 @@ def get_official_dollar_prices_from_cache_service(
     Get the buying and selling prices for the blue dollar from the cache.
     """
 
-    dollar = Dollar.objects.get(type_of_quote=type_of_quote)
-    return dollar.price_buy, dollar.price_sell
+    dollar_prices = cache.get(type_of_quote)
+    return dollar_prices["buying_price"], dollar_prices["selling_price"]
