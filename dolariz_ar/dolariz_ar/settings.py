@@ -173,3 +173,10 @@ SPECTACULAR_SETTINGS = {
     # Adds 'blank' and 'null' enum choices where appropriate. disable on client generation issues
     "ENUM_ADD_EXPLICIT_BLANK_NULL_CHOICE": False,
 }
+
+# Django REST Framework configuration
+
+REST_FRAMEWORK = {
+    # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
