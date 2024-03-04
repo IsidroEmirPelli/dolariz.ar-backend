@@ -21,12 +21,18 @@ def get_official_dollar_prices_from_db_service(
     return dollar.price_buy, dollar.price_sell
 
 
-def get_official_dollar_prices_from_cache_service(
+def get_official_dollar_prices_and_variations_from_cache_service(
     type_of_quote: DollarType,
-) -> tuple[float, float]:
+) -> tuple[float, float, float, float]:
     """
     Get the buying and selling prices for the blue dollar from the cache.
     """
 
-    dollar_prices = cache.get(type_of_quote)
-    return dollar_prices["buying_price"], dollar_prices["selling_price"]
+    cached = cache.get(type_of_quote)
+    prices = (
+        cached["buying_price"],
+        cached["selling_price"],
+        cached["variation_buying_price"],
+        cached["variation_selling_price"],
+    )
+    return prices
