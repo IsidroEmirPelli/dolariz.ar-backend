@@ -29,10 +29,10 @@ def get_official_dollar_prices_and_variations_from_cache_service(
     """
 
     cached = cache.get(type_of_quote)
-    prices = (
-        cached["buying_price"],
-        cached["selling_price"],
-        cached["variation_buying_price"],
-        cached["variation_selling_price"],
-    )
+    prices = {
+        "buying_price": cached["buying_price"],
+        "selling_price": cached["selling_price"],
+        "variation_buying_price": cached["variation_buying_price"],
+        "variation_selling_price": cached["variation_selling_price"],
+    }
     return prices
