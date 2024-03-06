@@ -21,8 +21,13 @@ class DollarRecruiter:
         """
         Saves the dollar in the database.
         """
+
         type_of_quote = self.get_type_of_quote()
-        old_prices = cache.get(type_of_quote)
+        try:
+            old_prices = cache.get(str(type_of_quote))
+        except Exception:
+            old_prices = None
+        logger.info(f"\n\n\n\n\n ESTO LLEGA {old_prices} \n\n\n\n\n")
 
         variation_buying_price = DEFAULT_PRICE_VALUE
         variation_selling_price = DEFAULT_PRICE_VALUE
@@ -42,12 +47,8 @@ class DollarRecruiter:
             "variation_selling_price": variation_selling_price,
         }
 
-        try:
-            old_prices.update(value)
-            logger.info("Update the {type_of_quote} dollar in the cache.")
-        except AttributeError:
-            cache.set(type_of_quote, value)
-            logger.info(f"Creates the {type_of_quote} dollar in the cache.")
+        cache.set(str(type_of_quote), value)
+        logger.info(f"{type_of_quote} dollar has setted in the cache.")
 
         Dollar.objects.create(
             price_buy=self.get_buying_price(),
