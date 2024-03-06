@@ -1,5 +1,4 @@
-from rest_framework.serializers import ModelSerializer, Serializer
-from django.db.models import DecimalField
+from rest_framework.serializers import ModelSerializer
 
 from .models import Dollar
 
