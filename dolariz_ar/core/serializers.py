@@ -25,20 +25,3 @@ class DollarSerializer(ModelSerializer):
             "type_of_quote",
             "extra_data",
         ]
-
-
-class CacheDollarSerializer(Serializer):
-    """
-    Serializer for the Dollar model to be used in the cache.
-    
-    Attributes:
-    - buying_price (DecimalField): Price to buy the dollar.
-    - selling_price (DecimalField): Price to sell the dollar.
-    - variation_buying_price (DecimalField): Variation of the buying price.
-    - variation_selling_price (DecimalField): Variation of the selling price.
-    """
-
-    buying_price = DecimalField()
-    selling_price = DecimalField()
-    variation_buying_price = DecimalField()
-    variation_selling_price = DecimalField()

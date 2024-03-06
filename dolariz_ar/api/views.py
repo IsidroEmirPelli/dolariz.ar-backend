@@ -1,7 +1,7 @@
 import logging
 
 from core.models import Dollar, DollarType
-from core.serializers import CacheDollarSerializer, DollarSerializer
+from core.serializers import DollarSerializer
 from core.services import get_official_dollar_prices_and_variations_from_cache_service
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -86,7 +86,5 @@ class CachedDollarAPIView(APIView):
         data = get_official_dollar_prices_and_variations_from_cache_service(
             type_of_quote
         )
-        serializer = CacheDollarSerializer(data=data)
-        serializer.is_valid()
         logger.info(f"{self.__class__.__name__} get -> SUCCESS")
-        return Response(serializer.data)
+        return Response(data)
