@@ -13,7 +13,7 @@ router = DefaultRouter()
 router.register(r"dollar", DollarViewSet, basename="dollar")
 
 urlpatterns = [
-    path("cached/<str:type_of_quote>/", CachedDollarAPIView.as_view(), name="cached"),
+    path("cached/<int:type_of_quote>/", CachedDollarAPIView.as_view(), name="cached"),
     path("", include(router.urls)),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
