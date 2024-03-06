@@ -1,5 +1,10 @@
-from .models import Dollar, DollarType
+import logging
+
 from django.core.cache import cache
+
+from .models import Dollar, DollarType
+
+logger = logging.getLogger(__name__)
 
 
 def calc_variation(old_price: float, new_price: float) -> float:
@@ -18,6 +23,7 @@ def get_official_dollar_prices_from_db_service(
     """
 
     dollar = Dollar.objects.get(type_of_quote=type_of_quote)
+    logger.info(f"Got the {type_of_quote} dollar prices from the database.")
     return dollar.price_buy, dollar.price_sell
 
 
@@ -28,11 +34,12 @@ def get_official_dollar_prices_and_variations_from_cache_service(
     Get the buying and selling prices for the blue dollar from the cache.
     """
 
-    cached = cache.get(type_of_quote)
+    cached = cache.get(str(type_of_quote))
     prices = {
         "buying_price": cached["buying_price"],
         "selling_price": cached["selling_price"],
         "variation_buying_price": cached["variation_buying_price"],
         "variation_selling_price": cached["variation_selling_price"],
     }
+    logger.info(f"Got the {type_of_quote} dollar prices and variations from the cache.")
     return prices

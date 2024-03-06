@@ -27,7 +27,6 @@ class DollarRecruiter:
             old_prices = cache.get(str(type_of_quote))
         except Exception:
             old_prices = None
-        logger.info(f"\n\n\n\n\n ESTO LLEGA {old_prices} \n\n\n\n\n")
 
         variation_buying_price = DEFAULT_PRICE_VALUE
         variation_selling_price = DEFAULT_PRICE_VALUE
