@@ -6,14 +6,13 @@ from drf_spectacular.views import (
 )
 from rest_framework.routers import DefaultRouter
 
-from .views import CachedDollarAPIView, DollarViewSet
+from .views import DollarViewSet
 
 router = DefaultRouter()
 
 router.register(r"dollar", DollarViewSet, basename="dollar")
 
 urlpatterns = [
-    path("cached/<int:type_of_quote>/", CachedDollarAPIView.as_view(), name="cached"),
     path("", include(router.urls)),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
