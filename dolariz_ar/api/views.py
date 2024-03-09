@@ -13,7 +13,7 @@ from rest_framework.status import (
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from .filters import DollarFilterSet
-from .services import get_dollar_price_by_type_of_quote
+from .services import get_dollar_price_by_type_of_quote_from_cache, get_dollar_prices_from_cache
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 
 logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ class DollarViewSet(ReadOnlyModelViewSet):
 
     @extend_schema(
         summary='Cotización del dólar',
-        description='Obtener los precios y variaciones del dólar según el tipo de cotización.',
+        description='Obtener el precio y variación del dólar según el tipo de cotización.',
         parameters=[
             OpenApiParameter(
                 "type_of_quote",
@@ -54,7 +54,6 @@ class DollarViewSet(ReadOnlyModelViewSet):
         Obtain the dollar price from cache if available, else from db.
         """
 
-        logger.info(f"ESTO LLEGA COMO QUERY-PARAMS {request.query_params}")
         query_params = request.query_params.get("type_of_quote", None)
         if query_params:
             type_of_quote = query_params[0]
@@ -64,6 +63,21 @@ class DollarViewSet(ReadOnlyModelViewSet):
                 {"message": "Tipo de cotización inválido."},
                 status=HTTP_400_BAD_REQUEST,
             )
-        data = get_dollar_price_by_type_of_quote(type_of_quote)
+        data = get_dollar_price_by_type_of_quote_from_cache(type_of_quote)
         logger.info(f"{self.__class__.__name__} obtain_price → SUCCESS.")
         return Response(data, status=HTTP_200_OK)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="multiple",
+        url_name="multiple"
+    )
+    def get(self, request, *args, **kwargs):
+        """
+        Obtain the dollar prices from cache if available, else from db.
+        """
+
+        dollars = get_dollar_prices_from_cache()
+        logger.info(f"{self.__class__.__name__} obtain_price → SUCCESS.")
+        return Response(dollars, status=HTTP_200_OK)
