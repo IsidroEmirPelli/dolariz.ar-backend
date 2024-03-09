@@ -33,10 +33,12 @@ class DollarRecruiter:
 
         if old_prices:
             variation_buying_price = calc_variation(
-                self.get_buying_price(), float(old_prices["buying_price"])
+                float(old_prices["buying_price"]),
+                self.get_buying_price()
             )
             variation_selling_price = calc_variation(
-                self.get_selling_price(), float(old_prices["selling_price"])
+                float(old_prices["selling_price"]),
+                self.get_selling_price()
             )
 
         value = {
