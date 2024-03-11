@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # Custom libraries
+    "corsheaders",
     "drf_spectacular",
     "drf_spectacular_sidecar",
     "django_filters",
@@ -53,6 +54,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # CORS middleware that should be placed before CommonMiddleware
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -189,3 +192,7 @@ REST_FRAMEWORK = {
     # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+# CORS settings
+
+CORS_ALLOW_ALL_ORIGINS = True
