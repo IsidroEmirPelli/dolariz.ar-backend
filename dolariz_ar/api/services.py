@@ -43,7 +43,7 @@ def get_dollar_price_by_type_of_quote_from_cache(type_of_quote: str) -> dict:
 
 def get_dollar_prices_from_cache() -> dict:
     dollars = {
-        entrie[1]: get_dollar_price_by_type_of_quote_from_cache(str(entrie[0]))
-        for entrie in DollarType.choices()
+        entrie: get_dollar_price_by_type_of_quote_from_cache(str(entrie))
+        for entrie in DollarType.__labels__.keys()
     }
     return dollars
