@@ -17,3 +17,4 @@ pytest-django
 pytest-mock
 redis
 requests
+django-cors-headers
