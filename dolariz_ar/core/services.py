@@ -60,11 +60,11 @@ def save_dollar_prices_in_db(
     logger.info(f"{type_of_quote} dollar added to the database.")
 
 
-def get_official_dollar_prices_from_db_service(
+def get_dollar_prices_from_db_service(
     type_of_quote: DollarType,
 ) -> tuple[float, float]:
     """
-    Get the buying and selling prices for the blue dollar from the database.
+    Get the buying and selling prices for the dollar from the database.
     """
 
     dollar = Dollar.objects.get(type_of_quote=type_of_quote)
@@ -72,11 +72,11 @@ def get_official_dollar_prices_from_db_service(
     return dollar.price_buy, dollar.price_sell
 
 
-def get_official_dollar_prices_and_variations_from_cache_service(
+def get_dollar_prices_and_variations_from_cache_service(
     type_of_quote: DollarType,
 ) -> tuple[float, float, float, float]:
     """
-    Get the buying and selling prices for the blue dollar from the cache.
+    Get the buying and selling prices for the dollar from the cache.
     """
 
     cached = cache.get(str(type_of_quote))
