@@ -1,6 +1,6 @@
 import logging
 
-from core.connectors import get_connector
+from taskapp.services import get_connector
 from core.models import DollarType
 from dolariz_ar.celery import app
 
