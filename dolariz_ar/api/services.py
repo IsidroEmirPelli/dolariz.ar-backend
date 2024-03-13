@@ -2,7 +2,7 @@ import logging
 
 from core.models import Dollar, DollarType
 from core.services import (
-    get_official_dollar_prices_and_variations_from_cache_service,
+    get_dollar_prices_and_variations_from_cache_service,
     calc_variation,
 )
 
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def get_dollar_price_by_type_of_quote_from_cache(type_of_quote: str) -> dict:
     data = None
     try:
-        data = get_official_dollar_prices_and_variations_from_cache_service(
+        data = get_dollar_prices_and_variations_from_cache_service(
             type_of_quote
         )
         if not data:
@@ -43,7 +43,7 @@ def get_dollar_price_by_type_of_quote_from_cache(type_of_quote: str) -> dict:
 
 def get_dollar_prices_from_cache() -> dict:
     dollars = {
-        entrie[1]: get_dollar_price_by_type_of_quote_from_cache(str(entrie[0]))
-        for entrie in DollarType.choices()
+        entrie: get_dollar_price_by_type_of_quote_from_cache(str(entrie))
+        for entrie in DollarType.__labels__.keys()
     }
     return dollars

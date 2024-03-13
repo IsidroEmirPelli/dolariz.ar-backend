@@ -49,7 +49,7 @@ class DollarViewSet(ReadOnlyModelViewSet):
         url_path="single",
         url_name="single"
     )
-    def get(self, request, *args, **kwargs):
+    def single(self, request, *args, **kwargs):
         """
         Obtain the dollar price from cache if available, else from db.
         """
@@ -73,7 +73,7 @@ class DollarViewSet(ReadOnlyModelViewSet):
         url_path="multiple",
         url_name="multiple"
     )
-    def get(self, request, *args, **kwargs):
+    def multiple(self, request, *args, **kwargs):
         """
         Obtain the dollar prices from cache if available, else from db.
         """
