@@ -1,7 +1,6 @@
 import logging
 
 from bs4 import BeautifulSoup
-from django.core.cache import cache
 from requests import get
 
 from constants import (
@@ -90,7 +89,7 @@ class OfficialDollarRecruiter(DollarRecruiter):
         )
         self.buying_price = float(prices[0].string)
         self.selling_price = float(prices[1].string)
-        self.type_of_quote = DollarType.OFFICIAL
+        self.type_of_quote = DollarType.OFFICIAL.value
 
 
 class BlueDollarRecruiter(DollarRecruiter):
@@ -116,7 +115,7 @@ class BlueDollarRecruiter(DollarRecruiter):
             .find("div", class_="val")
             .string.removeprefix("$")
         )
-        self.type_of_quote = DollarType.BLUE
+        self.type_of_quote = DollarType.BLUE.value
 
 
 class MEPDollarRecruiter(DollarRecruiter):
@@ -126,7 +125,7 @@ class MEPDollarRecruiter(DollarRecruiter):
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.MEP
+        self.type_of_quote = DollarType.MEP.value
 
 
 class CCLDollarRecruiter(DollarRecruiter):
@@ -136,7 +135,7 @@ class CCLDollarRecruiter(DollarRecruiter):
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.CCL
+        self.type_of_quote = DollarType.CCL.value
 
 
 class LEDESDollarRecruiter(DollarRecruiter):
@@ -146,7 +145,7 @@ class LEDESDollarRecruiter(DollarRecruiter):
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.LEDES
+        self.type_of_quote = DollarType.LEDES.value
 
 
 def get_connector(type_of_quote: int):
