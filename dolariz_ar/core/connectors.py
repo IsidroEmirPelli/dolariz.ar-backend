@@ -7,8 +7,7 @@ from requests import get
 from constants import BLUE_DOLLAR_URL, DEFAULT_PRICE_VALUE, OFFICIAL_DOLLAR_URL
 
 from .models import DollarType
-from .models import Dollar
-from .services import calc_variation
+from .services import calc_variation, save_dollar_prices_in_db
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +18,7 @@ class DollarRecruiter:
 
     def save(self):
         """
-        Saves the dollar in the database.
+        Stores dollar prices in the cache and database.
         """
 
         type_of_quote = self.get_type_of_quote()
@@ -51,11 +50,12 @@ class DollarRecruiter:
         cache.set(str(type_of_quote), value)
         logger.info(f"{type_of_quote} dollar has setted in the cache.")
 
-        Dollar.objects.create(
-            price_buy=self.get_buying_price(),
-            price_sell=self.get_selling_price(),
-            type_of_quote=type_of_quote,
+        save_dollar_prices_in_db(
+            self.get_buying_price,
+            self.get_selling_price,
+            type_of_quote
         )
+
 
     def get_buying_price(self) -> float:
         """
