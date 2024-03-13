@@ -4,10 +4,16 @@ from bs4 import BeautifulSoup
 from django.core.cache import cache
 from requests import get
 
-from constants import BLUE_DOLLAR_URL, DEFAULT_PRICE_VALUE, OFFICIAL_DOLLAR_URL
+from constants import (
+    BLUE_DOLLAR_URL,
+    OFFICIAL_DOLLAR_URL
+)
 
 from .models import DollarType
-from .services import calc_variation, save_dollar_prices_in_db
+from .services import (
+    save_dollar_prices_in_db,
+    save_dollar_prices_in_cache
+)
 
 logger = logging.getLogger(__name__)
 
@@ -22,40 +28,21 @@ class DollarRecruiter:
         """
 
         type_of_quote = self.get_type_of_quote()
-        try:
-            old_prices = cache.get(str(type_of_quote))
-        except Exception:
-            old_prices = None
-
-        variation_buying_price = DEFAULT_PRICE_VALUE
-        variation_selling_price = DEFAULT_PRICE_VALUE
-
-        if old_prices:
-            variation_buying_price = calc_variation(
-                float(old_prices["buying_price"]),
-                self.get_buying_price()
-            )
-            variation_selling_price = calc_variation(
-                float(old_prices["selling_price"]),
-                self.get_selling_price()
-            )
-
-        value = {
-            "buying_price": self.get_buying_price(),
-            "selling_price": self.get_selling_price(),
-            "variation_buying_price": variation_buying_price,
-            "variation_selling_price": variation_selling_price,
-        }
-
-        cache.set(str(type_of_quote), value)
-        logger.info(f"{type_of_quote} dollar has setted in the cache.")
-
-        save_dollar_prices_in_db(
-            self.get_buying_price,
-            self.get_selling_price,
+        buying_price = self.get_buying_price()
+        selling_price = self.get_selling_price()
+        save_dollar_prices_in_cache(
+            buying_price,
+            selling_price,
             type_of_quote
         )
-
+        save_dollar_prices_in_db(
+            buying_price,
+            selling_price,
+            type_of_quote
+        )
+        logger.info(
+            f"{self.__class__.__name__} save -> B{buying_price}-S{selling_price}-T{type_of_quote}."
+        )
 
     def get_buying_price(self) -> float:
         """

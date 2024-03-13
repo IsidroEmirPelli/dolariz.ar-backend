@@ -1,6 +1,7 @@
 import logging
 
 from django.core.cache import cache
+from constants import DEFAULT_PRICE_VALUE
 
 from .models import Dollar, DollarType
 
@@ -15,14 +16,45 @@ def calc_variation(old_price: float, new_price: float) -> float:
     return ((new_price / old_price) - 1) * 100
 
 
+def save_dollar_prices_in_cache(
+    buying_price: float,
+    selling_price: float,
+    type_of_quote: int
+) -> None:
+        try:
+            old_prices = cache.get(str(type_of_quote))
+        except Exception:
+            old_prices = None
+        if old_prices:
+            variation_buying_price = calc_variation(
+                float(old_prices["buying_price"]),
+                buying_price
+            )
+            variation_selling_price = calc_variation(
+                float(old_prices["selling_price"]),
+                selling_price
+            )
+        else:
+            variation_buying_price = DEFAULT_PRICE_VALUE
+            variation_selling_price = DEFAULT_PRICE_VALUE
+        value = {
+            "buying_price": buying_price,
+            "selling_price": selling_price,
+            "variation_buying_price": variation_buying_price,
+            "variation_selling_price": variation_selling_price,
+        }
+        cache.set(str(type_of_quote), value)
+        logger.info(f"{type_of_quote} dollar has setted in the cache.")
+
+
 def save_dollar_prices_in_db(
-    get_buying_price: float,
-    get_selling_price: float,
+    buying_price: float,
+    selling_price: float,
     type_of_quote: int
 ) -> None:
     Dollar.objects.create(
-        price_buy=get_buying_price(),
-        price_sell=get_selling_price(),
+        price_buy=buying_price,
+        price_sell=selling_price,
         type_of_quote=type_of_quote,
     )
     logger.info(f"{type_of_quote} dollar added to the database.")
