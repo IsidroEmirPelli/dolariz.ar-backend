@@ -103,7 +103,7 @@ class OfficialDollarRecruiter(DollarRecruiter):
         )
         self.buying_price = float(prices[0].string)
         self.selling_price = float(prices[1].string)
-        self.type_of_quote = DollarType.OFFICIAL.value
+        self.type_of_quote = DollarType.OFFICIAL
 
 
 class BlueDollarRecruiter(DollarRecruiter):
@@ -129,7 +129,7 @@ class BlueDollarRecruiter(DollarRecruiter):
             .find("div", class_="val")
             .string.removeprefix("$")
         )
-        self.type_of_quote = DollarType.BLUE.value
+        self.type_of_quote = DollarType.BLUE
 
 
 class MEPDollarRecruiter(DollarRecruiter):
@@ -139,7 +139,7 @@ class MEPDollarRecruiter(DollarRecruiter):
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.MEP.value
+        self.type_of_quote = DollarType.MEP
 
 
 class CCLDollarRecruiter(DollarRecruiter):
@@ -149,7 +149,7 @@ class CCLDollarRecruiter(DollarRecruiter):
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.CCL.value
+        self.type_of_quote = DollarType.CCL
 
 
 class LEDESDollarRecruiter(DollarRecruiter):
@@ -159,7 +159,7 @@ class LEDESDollarRecruiter(DollarRecruiter):
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.LEDES.value
+        self.type_of_quote = DollarType.LEDES
 
 
 def get_connector(type_of_quote: int):
