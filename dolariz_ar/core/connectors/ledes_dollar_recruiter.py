@@ -1,13 +1,13 @@
 import logging
 
 from core.models import DollarType
-from core.connectors.dollar_recuiter_byma import DollarRecuiterByma
+from core.connectors.dollar_recuiter_byma import DollarRecruiterByma
 from constants import LEDES_DOLLAR_URL
 
 logger = logging.getLogger(__name__)
 
 
-class LEDESDollarRecruiter(DollarRecuiterByma):
+class LEDESDollarRecruiter(DollarRecruiterByma):
     def __init__(self) -> None:
         """
         Calculates the buying and selling prices for the MEP dollar from the web COnvert this request into a method

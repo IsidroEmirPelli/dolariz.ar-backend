@@ -7,7 +7,7 @@ from constants import OFFICIAL_DOLLAR_URL
 
 from core.models import DollarType
 
-from core.connectors.dollar_recuiter import DollarRecruiter
+from dolariz_ar.core.connectors.dollar_recruiter import DollarRecruiter
 
 logger = logging.getLogger(__name__)
 
