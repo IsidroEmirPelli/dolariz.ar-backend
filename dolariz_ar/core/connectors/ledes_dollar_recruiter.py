@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 class LEDESDollarRecruiter(DollarRecruiterByma):
     def __init__(self) -> None:
         """
-        Calculates the buying and selling prices for the MEP dollar from the web COnvert this request into a method
+        Calculates the buying and selling prices for the MEP dollar from the web
         """
 
         self.url = LEDES_DOLLAR_URL
