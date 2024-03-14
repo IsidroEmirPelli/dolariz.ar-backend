@@ -13,7 +13,10 @@ from rest_framework.status import (
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from .filters import DollarFilterSet
-from .services import get_dollar_price_by_type_of_quote_from_cache, get_dollar_prices_from_cache
+from .services import (
+    get_dollar_price_by_type_of_quote_from_cache,
+    get_dollar_prices_from_cache,
+)
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 
 logger = logging.getLogger(__name__)
@@ -31,24 +34,21 @@ class DollarViewSet(ReadOnlyModelViewSet):
     ordering_fields = ["price_buy", "price_sell", "date"]
 
     @extend_schema(
-        summary='Cotización del dólar',
-        description='Obtener el precio y variación del dólar según el tipo de cotización.',
+        summary="Cotización del dólar",
+        description="Obtener el precio y variación del dólar según el tipo de cotización.",
         parameters=[
             OpenApiParameter(
                 "type_of_quote",
                 OpenApiTypes.STR,
                 OpenApiParameter.QUERY,
-                description='Tipo de cotización',
+                description="Tipo de cotización",
             ),
         ],
-        tags=['Cotización', ]
+        tags=[
+            "Cotización",
+        ],
     )
-    @action(
-        detail=False,
-        methods=["get"],
-        url_path="single",
-        url_name="single"
-    )
+    @action(detail=False, methods=["get"], url_path="single", url_name="single")
     def single(self, request, *args, **kwargs):
         """
         Obtain the dollar price from cache if available, else from db.
@@ -67,12 +67,7 @@ class DollarViewSet(ReadOnlyModelViewSet):
         logger.info(f"{self.__class__.__name__} obtain_price → SUCCESS.")
         return Response(data, status=HTTP_200_OK)
 
-    @action(
-        detail=False,
-        methods=["get"],
-        url_path="multiple",
-        url_name="multiple"
-    )
+    @action(detail=False, methods=["get"], url_path="multiple", url_name="multiple")
     def multiple(self, request, *args, **kwargs):
         """
         Obtain the dollar prices from cache if available, else from db.

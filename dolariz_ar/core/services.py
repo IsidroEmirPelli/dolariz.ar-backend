@@ -17,40 +17,34 @@ def calc_variation(old_price: float, new_price: float) -> float:
 
 
 def save_dollar_prices_in_cache(
-    buying_price: float,
-    selling_price: float,
-    type_of_quote: int
+    buying_price: float, selling_price: float, type_of_quote: int
 ) -> None:
-        try:
-            old_prices = cache.get(str(type_of_quote))
-        except Exception:
-            old_prices = None
-        if old_prices:
-            variation_buying_price = calc_variation(
-                float(old_prices["buying_price"]),
-                buying_price
-            )
-            variation_selling_price = calc_variation(
-                float(old_prices["selling_price"]),
-                selling_price
-            )
-        else:
-            variation_buying_price = DEFAULT_PRICE_VALUE
-            variation_selling_price = DEFAULT_PRICE_VALUE
-        value = {
-            "buying_price": buying_price,
-            "selling_price": selling_price,
-            "variation_buying_price": variation_buying_price,
-            "variation_selling_price": variation_selling_price,
-        }
-        cache.set(str(type_of_quote), value)
-        logger.info(f"{type_of_quote} dollar has setted in the cache.")
+    try:
+        old_prices = cache.get(str(type_of_quote))
+    except Exception:
+        old_prices = None
+    if old_prices:
+        variation_buying_price = calc_variation(
+            float(old_prices["buying_price"]), buying_price
+        )
+        variation_selling_price = calc_variation(
+            float(old_prices["selling_price"]), selling_price
+        )
+    else:
+        variation_buying_price = DEFAULT_PRICE_VALUE
+        variation_selling_price = DEFAULT_PRICE_VALUE
+    value = {
+        "buying_price": buying_price,
+        "selling_price": selling_price,
+        "variation_buying_price": variation_buying_price,
+        "variation_selling_price": variation_selling_price,
+    }
+    cache.set(str(type_of_quote), value)
+    logger.info(f"{type_of_quote} dollar has setted in the cache.")
 
 
 def save_dollar_prices_in_db(
-    buying_price: float,
-    selling_price: float,
-    type_of_quote: int
+    buying_price: float, selling_price: float, type_of_quote: int
 ) -> None:
     Dollar.objects.create(
         price_buy=buying_price,
@@ -86,6 +80,5 @@ def get_dollar_prices_and_variations_from_cache_service(
         "variation_buying_price": cached["variation_buying_price"],
         "variation_selling_price": cached["variation_selling_price"],
     }
-    logger.info(
-        f"Got the {type_of_quote} dollar prices and variations from the cache.")
+    logger.info(f"Got the {type_of_quote} dollar prices and variations from the cache.")
     return prices

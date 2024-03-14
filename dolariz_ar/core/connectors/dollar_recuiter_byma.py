@@ -1,31 +1,47 @@
 import logging
 import requests
 
-from core.models import DollarType
-
-from core.connectors.dollar_recuiter import DollarRecruiter
+from dolariz_ar.core.connectors.dollar_recruiter import DollarRecruiter
 
 logger = logging.getLogger(__name__)
 
 
-class MEPDollarRecruiter(DollarRecruiter):
+class DollarRecruiterByma(DollarRecruiter):
     def __init__(self) -> None:
         """
-            Calculates the buying and selling prices for the MEP dollar from the web COnvert this request into a method
+        Calculates the buying and selling prices for the MEP dollar from the
         """
 
         super().__init__()
-        self.type_of_quote = DollarType.MEP.value
-        self.url = "https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/bnown/seriesHistoricas/iamc/bonos"
-        self.data = {"page_number": 1}
-        self.al30, self.al30D = self.get_bond_prices()
-        self.al30_buying_price = self.al30[0].get("cotizacion", None)
-        self.al30d_selling_price = self.al30D[0].get("cotizacion", None)
+        self.bond, self.bondD = self.get_bond_prices(
+            self.bond_value,
+            self.bondD_value,
+        )
 
-        self.buying_price = self.al30_buying_price / self.al30d_selling_price
+        (
+            self.bond_buying_price,
+            self.bondD_selling_price,
+        ) = self.get_prices_from_response()
+
+        self.buying_price = self.bond_buying_price / self.bondD_selling_price
         self.selling_price = self.buying_price
 
-    def get_bond_prices(self) -> tuple[dict]:
+    def get_prices_from_response(self) -> tuple[float]:
+        """
+        Get the buying and selling prices from the response of the web.
+
+        Returns
+        -------
+        tuple[float]
+            The buying and selling prices.
+        """
+
+        bond_buying_price = self.bond[0].get("cotizacion", None)
+        bondD_selling_price = self.bondD[0].get("cotizacion", None)
+
+        return bond_buying_price, bondD_selling_price
+
+    def get_bond_prices(self, bond_value, bondD_value) -> tuple[dict]:
         """
         Get the prices of the bonds from the web.
 
@@ -57,11 +73,11 @@ class MEPDollarRecruiter(DollarRecruiter):
         if response.status_code != 200:
             logger.error(f"Error: {response.status_code} {response.text}")
             return []
-        # Process the JSON data
+
         data = response.json()
         list_bonds = data["data"]
 
-        al30 = [bond for bond in list_bonds if bond.get("symbol", None) == "AL30"]
-        al30D = [bond for bond in list_bonds if bond.get("symbol", None) == "AL30D"]
+        bond = [bond for bond in list_bonds if bond.get("symbol", None) == bond_value]
+        bondD = [bond for bond in list_bonds if bond.get("symbol", None) == bondD_value]
 
-        return al30, al30D
+        return bond, bondD

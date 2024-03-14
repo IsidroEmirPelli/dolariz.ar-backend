@@ -12,22 +12,16 @@ logger = logging.getLogger(__name__)
 def get_dollar_price_by_type_of_quote_from_cache(type_of_quote: str) -> dict:
     data = None
     try:
-        data = get_dollar_prices_and_variations_from_cache_service(
-            type_of_quote
-        )
+        data = get_dollar_prices_and_variations_from_cache_service(type_of_quote)
         if not data:
-            prices = (
-                Dollar.objects
-                .filter(type_of_quote=type_of_quote)
-                .latest("date")[:2]
+            prices = Dollar.objects.filter(type_of_quote=type_of_quote).latest("date")[
+                :2
+            ]
+            variation_buying_price = (
+                calc_variation(prices[1].price_buy, prices[0].price_buy),
             )
-            variation_buying_price = calc_variation(
-                prices[1].price_buy,
-                prices[0].price_buy
-            ),
             variation_selling_price = calc_variation(
-                prices[1].price_sell,
-                prices[0].price_sell
+                prices[1].price_sell, prices[0].price_sell
             )
             data = {
                 "buying_price": prices[0].price_buy,
@@ -40,6 +34,7 @@ def get_dollar_price_by_type_of_quote_from_cache(type_of_quote: str) -> dict:
             f"get_dollar_price_by_type_of_quote obtain_price -> Error obtaining the dollar price: {e}"
         )
     return data
+
 
 def get_dollar_prices_from_cache() -> dict:
     dollars = {
