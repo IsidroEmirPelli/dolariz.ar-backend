@@ -6,7 +6,7 @@ from .models import Dollar
 class DollarSerializer(ModelSerializer):
     """
     Serializer for the Dollar model.
-    
+
     Attributes:
     - price_buy (FloatField): Price to buy the dollar.
     - price_sell (FloatField): Price to sell the dollar.

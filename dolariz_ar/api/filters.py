@@ -1,9 +1,5 @@
 from core.models import Dollar
-from django_filters.rest_framework import (
-    DateTimeFilter,
-    FilterSet,
-    NumberFilter
-)
+from django_filters.rest_framework import DateTimeFilter, FilterSet, NumberFilter
 
 
 class DollarFilterSet(FilterSet):

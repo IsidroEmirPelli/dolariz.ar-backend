@@ -14,5 +14,5 @@ class DollarType(Enum):
         BLUE: _("Blue"),
         MEP: _("MEP"),
         CCL: _("CCL"),
-        LEDES: _("Ledes")
+        LEDES: _("Ledes"),
     }

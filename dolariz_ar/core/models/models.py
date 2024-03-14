@@ -34,23 +34,13 @@ class Dollar(Model):
         help_text=_("Unique UUID for the dollar"),
     )
     price_buy = DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        help_text=_("Price to buy the dollar")
+        max_digits=10, decimal_places=2, help_text=_("Price to buy the dollar")
     )
     price_sell = DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        help_text=_("Price to sell the dollar")
+        max_digits=10, decimal_places=2, help_text=_("Price to sell the dollar")
     )
-    date = DateTimeField(
-        auto_now_add=True,
-        help_text=_("Date and time of the dollar")
-    )
-    type_of_quote = enum.EnumField(
-        DollarType,
-        help_text=_("Type of quote")
-    )
+    date = DateTimeField(auto_now_add=True, help_text=_("Date and time of the dollar"))
+    type_of_quote = enum.EnumField(DollarType, help_text=_("Type of quote"))
     extra_data = JSONField(
         help_text=_("Extra data for the dollar"),
         default=dict,
