@@ -14,7 +14,7 @@ class LEDESDollarRecruiter(DollarRecuiterByma):
         """
 
         self.url = LEDES_DOLLAR_URL
-        self.get_type_of_quote = DollarType.LEDES
+        self.type_of_quote = DollarType.LEDES
         self.bond_value = "X20Y4"
         self.bondD_value = "XY4D"
         self.data = {
