@@ -1,7 +1,7 @@
 import logging
 import requests
 
-from dolariz_ar.core.connectors.dollar_recruiter import DollarRecruiter
+from core.connectors.dollar_recruiter import DollarRecruiter
 
 logger = logging.getLogger(__name__)
 

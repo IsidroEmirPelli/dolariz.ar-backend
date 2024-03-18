@@ -2,7 +2,7 @@ import logging
 
 from core.models import DollarType
 
-from dolariz_ar.core.connectors.dollar_recruiter import DollarRecruiter
+from core.connectors.dollar_recruiter import DollarRecruiter
 
 logger = logging.getLogger(__name__)
 

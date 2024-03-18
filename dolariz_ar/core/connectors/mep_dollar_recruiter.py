@@ -15,7 +15,7 @@ class MEPDollarRecruiter(DollarRecruiterByma):
         """
 
         self.url = MEP_DOLLAR_URL
-        self.type_of_quote = DollarType.MEP
+        self.type_of_quote = DollarType.MEP.value
         self.bond_value = "AL30"
         self.bondD_value = "AL30D"
         self.data = {"page_number": 1}
