@@ -1,5 +1,3 @@
-# Help me to build the images and push the web to the github container registry
-
 name: Docker Image CI
 
 on:
@@ -22,7 +20,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      
+
       - name: create .env directory
         run: mkdir ./dolariz_ar/.env
 
@@ -37,5 +35,5 @@ jobs:
       - name: Docker compose build
         run: docker-compose -f ./dolariz_ar/docker-compose.yml build
       
-      - name: Push the django image
-        run: docker-compose -f ./dolariz_ar/docker-compose.yml push django
+      - name: Push the django image to the registry
+        run: docker-compose -f ./dolariz_ar/docker-compose.yml push django ghcr.io/${{ github.repository }}/dolariz-ar:latest
