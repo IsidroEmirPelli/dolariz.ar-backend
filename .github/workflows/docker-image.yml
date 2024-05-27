@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: "finnp/create-file-action@master"
+      env:
+        FILE_NAME: ".env/.dev-sample"
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker compose build
