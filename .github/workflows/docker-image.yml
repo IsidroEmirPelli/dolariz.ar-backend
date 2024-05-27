@@ -1,20 +1,36 @@
+# Help me to build the env file, docker image and push it to github container registry
 name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  create-env-file:
-    uses: SpicyPizza/create-envfile@v2.0.3
-    with:
-      file_name: .dev-sample
-      directory:  ${{ github.workspace }}/dolariz_ar/.env/.dev-sample
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker compose build
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./docker-compose.yml
+          push: true
+          tags: ghcr.io/${{ github.repository }}/dolariz.ar-backend:latest
+        
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
