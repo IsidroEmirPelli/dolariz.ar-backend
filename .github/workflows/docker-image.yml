@@ -38,4 +38,4 @@ jobs:
         run: docker-compose -f ./dolariz_ar/docker-compose.yml build
       
       - name: Push the django image
-        run: docker-compose -f ./dolariz_ar/docker-compose.yml push web
+        run: docker-compose -f ./dolariz_ar/docker-compose.yml push django
