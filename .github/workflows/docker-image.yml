@@ -24,7 +24,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Docker compose build
-        run: docker-compose -f docker-compose.yml build
+        run: docker-compose -f ./dolariz_ar/docker-compose.yml build
       
       - name: Push the django image
-        run: docker-compose -f docker-compose.yml push web
+        run: docker-compose -f ./dolariz_ar/docker-compose.yml push web
