@@ -36,4 +36,4 @@ jobs:
         run: docker-compose -f ./dolariz_ar/docker-compose.yml build
       
       - name: Push the django image to the registry
-        run: docker-compose -f ./dolariz_ar/docker-compose.yml push django ghcr.io/${{ github.repository }}/dolariz-ar:latest
+        run: docker-compose -f ./dolariz_ar/docker-compose.yml push
