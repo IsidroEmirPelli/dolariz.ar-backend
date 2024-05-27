@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker-compose.yml
+          file: docker-compose.yml
           push: true
           tags: ghcr.io/isidroemirpelli/dolariz.ar-backend:latest
         
