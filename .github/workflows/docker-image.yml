@@ -30,7 +30,7 @@ jobs:
           context: .
           file: ./docker-compose.yml
           push: true
-          tags: ghcr.io/${{ github.repository }}/dolariz.ar-backend:latest
+          tags: ghcr.io/isidroemirpelli/dolariz.ar-backend:latest
         
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
