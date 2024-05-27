@@ -22,6 +22,9 @@ jobs:
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+      - name: create .env directory
+        run: mkdir ./dolariz_ar/.env
 
       - name: Create .env file
         # You may pin to the exact commit or the version.
@@ -29,7 +32,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0.3
         with:
           file_name: .dev-sample
-          directory: ./.env/
+          directory: ./dolariz_ar/.env/
 
       - name: Docker compose build
         run: docker-compose -f ./dolariz_ar/docker-compose.yml build
