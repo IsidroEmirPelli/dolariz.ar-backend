@@ -1,4 +1,5 @@
-# Help me to build the env file, docker image and push it to github container registry
+# Help me to build the images and push the web to the github container registry
+
 name: Docker Image CI
 
 on:
@@ -11,8 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -28,9 +28,12 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./dolariz_ar/docker-compose.yml
+          file: ./dolariz_ar/compose/local/django/Dockerfile
           push: true
           tags: ghcr.io/isidroemirpelli/dolariz.ar-backend:latest
-        
+
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Push the image digest to the repository
+        run: echo "::set-output name=docker_digest::${{ steps.docker_build.outputs.digest }}"
