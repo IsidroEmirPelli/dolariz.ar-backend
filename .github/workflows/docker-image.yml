@@ -7,9 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
-
+  create-env-file:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,6 +38,12 @@ jobs:
           BLUE_DOLLAR_URL=https://dolarhoy.com/
           OFFICIAL_DOLLAR_URL=https://www.bna.com.ar/Personas
         directory: ${{ github.workspace }}/dolariz_ar/.env/.dev-sample
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker compose build
